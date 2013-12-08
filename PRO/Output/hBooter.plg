@@ -1,0 +1,86 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\huh\Desktop\hBooter\PRO\IPMC.uvproj
+Project File Date:  12/08/2013
+
+<h2>Output:</h2>
+Build target 'BOOTLOADER'
+compiling app.c...
+..\INC\system.h(97): warning:  #1295-D: Deprecated declaration ipmcSetupSlot - give arg types
+..\APP\app.c(8): warning:  #223-D: function "srvBoardInit" declared implicitly
+..\APP\app.c(9): warning:  #223-D: function "printf" declared implicitly
+..\APP\app.c(11): warning:  #111-D: statement is unreachable
+compiling comp_uart.c...
+..\INC\system.h(97): warning:  #1295-D: Deprecated declaration ipmcSetupSlot - give arg types
+..\SRC\comp_uart.c(47): warning:  #68-D: integer conversion resulted in a change of sign
+..\SRC\comp_uart.c(56): warning:  #68-D: integer conversion resulted in a change of sign
+..\SRC\comp_uart.c(88): warning:  #223-D: function "strlen" declared implicitly
+..\SRC\comp_uart.c(100): warning:  #223-D: function "memset" declared implicitly
+..\SRC\comp_uart.c(118): warning:  #513-D: a value of type "volatile char *" cannot be assigned to an entity of type "char *"
+..\SRC\comp_uart.c(122): warning:  #223-D: function "fish_echo" declared implicitly
+..\SRC\comp_uart.c(111): warning:  #550-D: variable "counter" was set but never used
+..\SRC\comp_uart.c(27): warning:  #177-D: variable "uart_recv_cycle_last" was declared but never referenced
+compiling startup.c...
+..\INC\system.h(97): warning:  #1295-D: Deprecated declaration ipmcSetupSlot - give arg types
+compiling comp_gpio.c...
+..\INC\system.h(97): warning:  #1295-D: Deprecated declaration ipmcSetupSlot - give arg types
+compiling serve_amf.c...
+..\INC\system.h(97): warning:  #1295-D: Deprecated declaration ipmcSetupSlot - give arg types
+..\SRC\serve_amf.c(8): warning:  #223-D: function "usartBufferInit" declared implicitly
+..\SRC\serve_amf.c(19): warning:  #223-D: function "bootloader_stage1" declared implicitly
+..\SRC\serve_amf.c(20): warning:  #223-D: function "fish_init" declared implicitly
+..\SRC\serve_amf.c(21): warning:  #940-D: missing return statement at end of non-void function "srvBoardInit"
+compiling comp_fish.c...
+..\INC\system.h(97): warning:  #1295-D: Deprecated declaration ipmcSetupSlot - give arg types
+..\SRC\comp_fish.c(62): warning:  #223-D: function "updFirmware" declared implicitly
+..\SRC\comp_fish.c(90): warning:  #513-D: a value of type "volatile char *" cannot be assigned to an entity of type "char *"
+..\SRC\comp_fish.c(91): warning:  #513-D: a value of type "volatile char *" cannot be assigned to an entity of type "char *"
+..\SRC\comp_fish.c(94): warning:  #223-D: function "memset" declared implicitly
+..\SRC\comp_fish.c(102): warning:  #513-D: a value of type "FUNC (*)(void *)" cannot be assigned to an entity of type "FUNC"
+..\SRC\comp_fish.c(110): warning:  #513-D: a value of type "FUNC (*)(void *)" cannot be assigned to an entity of type "FUNC"
+..\SRC\comp_fish.c(117): warning:  #513-D: a value of type "FUNC (*)(void *)" cannot be assigned to an entity of type "FUNC"
+..\SRC\comp_fish.c(141): warning:  #223-D: function "memcmp" declared implicitly
+..\SRC\comp_fish.c(182): warning:  #223-D: function "putstr" declared implicitly
+..\SRC\comp_fish.c(188): warning:  #223-D: function "memcmp" declared implicitly
+..\SRC\comp_fish.c(188): warning:  #223-D: function "strlen" declared implicitly
+..\SRC\comp_fish.c(206): warning:  #223-D: function "putstr" declared implicitly
+..\SRC\comp_fish.c(243): warning:  #513-D: a value of type "volatile char *" cannot be assigned to an entity of type "char *"
+..\SRC\comp_fish.c(174): warning:  #177-D: variable "tmp" was declared but never referenced
+compiling olupd.c...
+..\SRC\olupd.c(47): warning:  #223-D: function "YmodemReceive" declared implicitly
+..\SRC\olupd.c(54): warning:  #223-D: function "FLASH_If_lock" declared implicitly
+..\SRC\olupd.c(44): warning:  #177-D: variable "Jump_To_Application" was declared but never referenced
+..\SRC\olupd.c(45): warning:  #177-D: variable "JumpAddress" was declared but never referenced
+..\SRC\olupd.c(18): warning:  #177-D: function "appRunInRam" was declared but never referenced
+compiling ymodem.c...
+..\SRC\ymodem.c(98): warning:  #223-D: function "send_buf" declared implicitly
+..\SRC\ymodem.c(102): warning:  #223-D: function "send_buf" declared implicitly
+..\SRC\ymodem.c(107): warning:  #223-D: function "recv_buf" declared implicitly
+..\SRC\ymodem.c(166): warning:  #513-D: a value of type "char *" cannot be assigned to an entity of type "unsigned char *"
+..\SRC\ymodem.c(167): warning:  #223-D: function "atoi" declared implicitly
+..\SRC\ymodem.c(167): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *"
+..\SRC\ymodem.c(172): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+..\SRC\ymodem.c(174): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+..\SRC\ymodem.c(184): warning:  #223-D: function "printf" declared implicitly
+..\SRC\ymodem.c(149): warning:  #177-D: variable "JumpAddress" was declared but never referenced
+..\SRC\ymodem.c(150): warning:  #550-D: variable "app_pointer" was set but never used
+..\SRC\ymodem.c(151): warning:  #177-D: variable "Jump_To_Application" was declared but never referenced
+compiling flash_if.c...
+compiling system_stm32f2xx.c...
+assembling startup_stm32f2xx.s...
+compiling stm32f2xx_usart.c...
+compiling stm32f2xx_rcc.c...
+compiling stm32f2xx_gpio.c...
+compiling misc.c...
+compiling stm32f2xx_syscfg.c...
+compiling stm32f2xx_flash.c...
+linking...
+Program Size: Code=5460 RO-data=1240 RW-data=60 ZI-data=1236  
+FromELF: creating hex file...
+".\Output\hBooter.axf" - 0 Error(s), 52 Warning(s).
+Clean started: Project: 'IPMC'
+   deleting intermediate output files for target 'IPMC'
+   deleting intermediate output files for target 'BOOTLOADER'

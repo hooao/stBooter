@@ -1,0 +1,35 @@
+*** Creating Trace Output File '.\Output\hBooter.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\output\app.o"'
+### List of Objects: adding '".\output\comp_uart.o"'
+### List of Objects: adding '".\output\startup.o"'
+### List of Objects: adding '".\output\comp_gpio.o"'
+### List of Objects: adding '".\output\serve_amf.o"'
+### List of Objects: adding '".\output\comp_fish.o"'
+### List of Objects: adding '".\output\olupd.o"'
+### List of Objects: adding '".\output\ymodem.o"'
+### List of Objects: adding '".\output\flash_if.o"'
+### List of Objects: adding '".\output\system_stm32f2xx.o"'
+### List of Objects: adding '".\output\startup_stm32f2xx.o"'
+### List of Objects: adding '".\output\stm32f2xx_usart.o"'
+### List of Objects: adding '".\output\stm32f2xx_rcc.o"'
+### List of Objects: adding '".\output\stm32f2xx_gpio.o"'
+### List of Objects: adding '".\output\misc.o"'
+### List of Objects: adding '".\output\stm32f2xx_syscfg.o"'
+### List of Objects: adding '".\output\stm32f2xx_flash.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 ".\output\app.o" ".\output\comp_uart.o" ".\output\startup.o" ".\output\comp_gpio.o" ".\output\serve_amf.o" ".\output\comp_fish.o" ".\output\olupd.o" ".\output\ymodem.o" ".\output\flash_if.o" ".\output\system_stm32f2xx.o" ".\output\startup_stm32f2xx.o" ".\output\stm32f2xx_usart.o" ".\output\stm32f2xx_rcc.o" ".\output\stm32f2xx_gpio.o" ".\output\misc.o" ".\output\stm32f2xx_syscfg.o" ".\output\stm32f2xx_flash.o" --library_type=microlib --strict --scatter ".\Output\hBooter.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\Listing\hBooter.map" -o ".\Output\hBooter.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\Output\hBooter.axf'
+### ADS-LD Command File: '.\Output\hBooter.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\Output\hBooter.lnp', Handle=0x0000031C
+### Writing '.lnp' file
+### ADS-LD Command file '.\Output\hBooter.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.
