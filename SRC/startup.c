@@ -68,7 +68,7 @@ int cfgPeriphUart()
     UART4->CR3 = 0x0000;
     UART4->CR2 = 0x0000;
     UART4->CR1 = 0x200C;
-    UART4->CR1 |= (1 << 5);//enable rx interrupt
+    //UART4->CR1 |= (1 << 5);//enable rx interrupt
 
     return 0;
 }

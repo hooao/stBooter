@@ -94,7 +94,7 @@ void fish_init(void)
     memset(uart_cache, 0x0, sizeof(uart_cache));
     memset(uart_buffer, 0x0, sizeof(uart_buffer));
     memset(fish_command_list, 0x0, sizeof(fish_command_list));
-    
+    UART4->CR1 |= (1 << 5);
     //!!some system command must register at startup time.
     // register command "help"
     cmd.code          = 0;
@@ -170,14 +170,14 @@ unsigned char fish_print_possible_command()
 char fish_echo()
 {
     unsigned char i;
-
+    char ret;
     int tmp;
     //check if p_uart_produce not equal to p_uart_custom
     while(p_uart_custom != p_uart_produce)//something new
     {
         if(*p_uart_custom == FISH_KEYBOARD_RETURN)//we got an return, find & execute command
         {
-            
+            ret = FISH_KEYBOARD_RETURN;
             put('\r');put('\n');
             putstr(IPMC_DEVSCRIPTION);
             if(cmd_counter)//if we really got a command
@@ -210,7 +210,7 @@ char fish_echo()
 
                printf("%s", uart_buffer);
              // fish_print_possible_command();
-              return 0;
+              return FISH_KEYBOARD_TABLE;
                 
           }
           else if(*p_uart_custom == FISH_KEYBOARD_BACKSPACE)//
@@ -248,6 +248,6 @@ char fish_echo()
             p_uart_custom++;
         
     }
-    return 0;
+    return ret;
 }
 

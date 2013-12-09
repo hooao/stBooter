@@ -80,7 +80,8 @@ int updFirmware()
 		   NVIC->ICER[5] = 0xffffffff;
 		   NVIC->ICER[6] = 0xffffffff;
 		   NVIC->ICER[7] = 0xffffffff;
-		   
+		   NVIC_SetVectorTable(0x8000000, 0x4000);
+		   __disable_irq();
 		//   NVIC_DisableIRQ(TIM2_IRQn);
 		//   NVIC_DisableIRQ(SysTick_IRQn);
 	//	   NVIC_DisableIRQ(UART4_IRQn);
