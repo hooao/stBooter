@@ -54,8 +54,11 @@ char recv_buf(USART_TypeDef * UARTx, unsigned char *buf, int len)
 	    int i = 0;
 	    if(len <=0 )
 			return -1;
-	    for(i = 0; i < len; i++)
-    	    get_byte(UARTx,(buf+i));
+	    for(i = 0; i < len; )
+        {
+            if(get_byte(UARTx,(buf+i)) != -1)
+            i++;
+        }
 		return i;
 }
 
@@ -66,10 +69,17 @@ char put(unsigned char ch)
 }
 char get_byte(USART_TypeDef * UARTx, unsigned char *ch)
 {
-    while(USART_GetITStatus(UART4, USART_IT_RXNE) == RESET)
-        ;
-    *ch = UARTx->DR;
-    return 0;
+    //if(USART_GetITStatus(UART4, USART_IT_RXNE) != RESET)
+	int try = 0xfffff;
+    while((USART_GetITStatus(UART4, USART_IT_RXNE) == RESET) && (try--))
+			;
+		if(try > 0)
+		{
+        *ch = UARTx->DR;
+        return 0;
+		}
+    else
+    return (-1);
 }
 
 
@@ -118,9 +128,6 @@ void UART4_IRQHandler()
             p_uart_produce = uart_cache;
         else
             p_uart_produce ++;
-        USART_ITConfig(UART4, USART_IT_RXNE, DISABLE);
-        fish_echo();
-        USART_ITConfig(UART4, USART_IT_RXNE, ENABLE);
     }
 }
 

@@ -126,10 +126,33 @@ static int ymodemEndTrans()
 static int ReceivePacket (char *data, int len, unsigned char Ishead)
 {
     YMODEM_HEAD_t head;
-    if(Ishead)
-        ymodemReqData();
-    ymodemRecvBuf((char *)&head, sizeof(YMODEM_HEAD_t));
-
+    while(Ishead == 1)
+    {
+        srvSleep(1);
+        if(Ishead)
+            ymodemReqData();
+        if(ymodemRecvBuf((char *)&head, sizeof(YMODEM_HEAD_t)) > 0)
+        {
+        //check if it is really a head packet
+            if(head.sn == 0 && head.rsn == 0xff)
+                break;
+            else
+            {
+              //ymodemEndTrans();
+              continue;
+            }
+        }
+        
+    }
+		if(Ishead == 2)
+		{
+			ymodemReqData();
+			ymodemRecvBuf((char *)&head, sizeof(YMODEM_HEAD_t));
+		}
+    if(! Ishead)
+    {
+        ymodemRecvBuf((char *)&head, sizeof(YMODEM_HEAD_t));
+    }
     switch(head.mode)
     {
         case YMODE_SOH:
@@ -144,25 +167,31 @@ static int ReceivePacket (char *data, int len, unsigned char Ishead)
     return 0;
 }
 
-unsigned char *YmodemReceive()
+char YmodemReceive()
 {
-    uint32_t JumpAddress;
-  	char *app_pointer = NULL;
+    //uint32_t JumpAddress;
+  	//char *app_pointer = NULL;
     pFunction Jump_To_Application;
     unsigned int fm_length;
     unsigned char *name = NULL;
     unsigned char *firmware = NULL;
     int i, j;
     char buf[128+sizeof(YMODEM_HEAD_t)];
-	app_pointer = (char *)0x20010000;
-
-    __disable_irq();
-     
+	//app_pointer = (char *)0x20010000;
+    //__disable_irq();
+    NVIC_DisableIRQ(UART4_IRQn);
     //receive the first packet
     firmware = (unsigned char *)&Image$$RW_IRAM1$$ZI$$Limit;
+    //firmware = (unsigned char *)0x20010000;
     fm_addr = (unsigned int*)firmware;
 	//firmware = (unsigned char *)0x20010000;
-    ReceivePacket(buf, 128, 1);
+    if(ReceivePacket(buf, 128, 1) != 0)
+    {
+        NVIC_EnableIRQ(UART4_IRQn);
+        goto
+        error;
+    }
+        
     name = buf;
     fm_length = atoi(buf+strlen(name)+1);
     fm_size = fm_length;
@@ -171,7 +200,7 @@ unsigned char *YmodemReceive()
         if(i != 0)
             ReceivePacket(firmware + i*128, 128, 0);
         else
-            ReceivePacket(firmware + i*128, 128, 1);
+            ReceivePacket(firmware + i*128, 128, 2);
     }
     //end of transmit
     //memset(firmware+fm_length, 0, 100);
@@ -180,8 +209,9 @@ unsigned char *YmodemReceive()
     j=0xfffff;
     while(j--);
     ymodemACK();
-    __enable_irq();
-    printf("\bReceive file %s , size : %d\r\n", name, fm_length);
+    NVIC_EnableIRQ(UART4_IRQn);
+    //__enable_irq();
+   // printf("\bReceive file %s , size : %d\r\n", name, fm_length);
     //check valid
     
 
@@ -219,5 +249,8 @@ unsigned char *YmodemReceive()
     FLASH_If_Erase(APPLICATION_ADDRESS);
     FLASH_If_Write(APPLICATION_ADDRESS, (unsigned int *)firmware, 100);
 #endif
-	return firmware;
+    
+	return 0;
+error:
+    return -1;
 }

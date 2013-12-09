@@ -41,10 +41,21 @@ int updBootloader()
 //             file
 int updFirmware()
 {
-	pFunction Jump_To_Application;
+			pFunction Jump_To_Application;
     uint32_t JumpAddress;
+
+    int timeout;
+    int ret;
     // receive firm ware
-    YmodemReceive();
+
+    ret = YmodemReceive();
+
+    put('\n');
+	if(ret != 0)
+	{
+	    printf("update firmware failed\r\n");
+	    return -1;
+	}
     if(fm_addr == NULL)
         return -1;
     FLASH_If_Init();
@@ -53,7 +64,7 @@ int updFirmware()
     //lock 
     FLASH_If_lock();
     printf("WARNNING: Amf system NEED A REBOOT\r\n");
-#if 0
+#if 1
 	//jump to new application
 	//application running
 		   JumpAddress = *(__IO uint32_t *)(APPLICATION_ADDRESS + 4);
@@ -70,7 +81,9 @@ int updFirmware()
 		   NVIC->ICER[6] = 0xffffffff;
 		   NVIC->ICER[7] = 0xffffffff;
 		   
-		   //NVIC_DisableIRQ(TIM2_IRQn);
+		//   NVIC_DisableIRQ(TIM2_IRQn);
+		//   NVIC_DisableIRQ(SysTick_IRQn);
+	//	   NVIC_DisableIRQ(UART4_IRQn);
 		   //if you want to enter a 
 		   Jump_To_Application();
 #endif

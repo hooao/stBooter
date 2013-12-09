@@ -197,6 +197,9 @@ char fish_echo()
                  }
             }
             }
+            
+			memset(uart_buffer, 0x0, cmd_counter);
+			cmd_counter = 0;
           }//end if(*p_uart_custom == FISH_KEYBOARD_RETURN)
           else if(*p_uart_custom == FISH_KEYBOARD_TABLE)
           {//print the possible command

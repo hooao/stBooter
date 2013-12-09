@@ -49,7 +49,7 @@
 
 /* Define the address from where user application will be loaded.
    Note: the 1st sector 0x08000000-0x08003FFF is reserved for the IAP code */
-#define APPLICATION_ADDRESS   (uint32_t)0x8010000 
+#define APPLICATION_ADDRESS   ADDR_FLASH_SECTOR_1
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
