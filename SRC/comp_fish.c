@@ -2,21 +2,14 @@
 #include <stdio.h>
 #include "config.h"
 #include "system.h"
+#include "version.h"
 #include "comp_uart.h"
 #include "comp_fish.h"
 
-#define CMD_HISTORY_ARRAY  100
-#define CMD_HISTORY_TAIL_BUFFER 28
-#define CMD_HISTORY_ARRAY_TOP   (CMD_HISTORY_ARRAY+CMD_HISTORY_TAIL_BUFFER)
 //extern valiable
 extern FISH_CMD_t fish_command_list[FISH_MAX_CMD_SUPPORT];
-unsigned char now_allocked;//已经申请掉的code command号码
-//char history[CMD_HISTORY_ARRAY+CMD_HISTORY_TAIL_BUFFER];//为了支持上、下键，搜索历史命令。历史命令用命令码来记录
-//在history数组中，为了使编程复杂度。我们使用512字节来当做history存储的环形缓冲，用550-512字节当做"末尾缓冲区"
-//所谓"末尾缓冲区"的意思是当512字节环形缓冲区在存储最后一个字串不够用时，550-512这部分将被使用，随后，
-//负责存储的指针立马回到环形缓冲区头部。如果最后一个字串较长，以致超过了550-512+n,n为512最后几个字符。那么，多余的字符
-//将被cut掉。history总是打印最近的512存储区中包含的字串。
-char *phistory = NULL;
+unsigned char now_allocked = 0;//已经申请掉的code command号码
+
 unsigned char fishAllocCmdCode()
 {
     return now_allocked;//新申请的command依次放在fish_command_list数组中，用now_allocked来记录当前已被申请的号码
@@ -40,6 +33,7 @@ FUNC help_main(void *arg)
 //Fish version description
 FUNC version_main(void *arg)
 {
+    printf("%s\r\n", VERSTR);
     return 0;
 }
 
@@ -50,11 +44,6 @@ FUNC board_main(void *arg)
     return 0;
 }
 
-//allow uart2 send a char to GX36
-FUNC tty_main(void *arg)
-{        
-    return 0;
-}
 
 //update firm by serial port.
 FUNC olupd_main(void *arg)
@@ -64,8 +53,9 @@ FUNC olupd_main(void *arg)
 }
 
 //found history command
-FUNC history_main()
+FUNC boot_main()
 {
+    srvLoadApp();
     return 0;
 }
 
@@ -94,30 +84,40 @@ void fish_init(void)
     memset(uart_cache, 0x0, sizeof(uart_cache));
     memset(uart_buffer, 0x0, sizeof(uart_buffer));
     memset(fish_command_list, 0x0, sizeof(fish_command_list));
-    UART4->CR1 |= (1 << 5);
+
     //!!some system command must register at startup time.
     // register command "help"
     cmd.code          = 0;
     cmd.name          = "help";
     cmd.exec          = help_main;
-    cmd.description   = "print help message";
+    cmd.description   = "Print help message";
     fish_command_register(&cmd);
-    //!register command "board"
-    //alloc a command code
      
     cmd.code          = fishAllocCmdCode();
     cmd.name          = "board";
     cmd.exec          = board_main;
-    cmd.description   = "online update STM32 fireware";
+    cmd.description   = "This is stBootloader";
     fish_command_register(&cmd);
 
 
     cmd.code          = fishAllocCmdCode();
     cmd.name          = "olupd";
     cmd.exec          = olupd_main;
-    cmd.description   = "online update STM32 fireware";
+    cmd.description   = "OnLine UPDate STM32 fireware";
+    fish_command_register(&cmd);
+    
+    cmd.code          = fishAllocCmdCode();
+    cmd.name          = "boot";
+    cmd.exec          = boot_main;
+    cmd.description   = "Boot the system";
     fish_command_register(&cmd);
 
+    
+    cmd.code          = fishAllocCmdCode();
+    cmd.name          = "version";
+    cmd.exec          = version_main;
+    cmd.description   = "Check out stBooter Version";
+    fish_command_register(&cmd);
     
 }
 
@@ -177,7 +177,6 @@ char fish_echo()
     {
         if(*p_uart_custom == FISH_KEYBOARD_RETURN)//we got an return, find & execute command
         {
-            ret = FISH_KEYBOARD_RETURN;
             put('\r');put('\n');
             putstr(IPMC_DEVSCRIPTION);
             if(cmd_counter)//if we really got a command
@@ -200,6 +199,7 @@ char fish_echo()
             
 			memset(uart_buffer, 0x0, cmd_counter);
 			cmd_counter = 0;
+            ret = FISH_KEYBOARD_RETURN;
           }//end if(*p_uart_custom == FISH_KEYBOARD_RETURN)
           else if(*p_uart_custom == FISH_KEYBOARD_TABLE)
           {//print the possible command
@@ -210,7 +210,7 @@ char fish_echo()
 
                printf("%s", uart_buffer);
              // fish_print_possible_command();
-              return FISH_KEYBOARD_TABLE;
+              ret = FISH_KEYBOARD_TABLE;
                 
           }
           else if(*p_uart_custom == FISH_KEYBOARD_BACKSPACE)//
@@ -224,17 +224,21 @@ char fish_echo()
                   put('\b');
                   
               }
+          ret = FISH_KEYBOARD_BACKSPACE;
           }
           else if(*p_uart_custom == FISH_KEYBOARD_UP)//found history command
           {
+              ret = FISH_KEYBOARD_UP;
           }
           else if(*p_uart_custom == FISH_KEYBOARD_DOWN)
           {
+              ret = FISH_KEYBOARD_DOWN;
           }
           else//other char, just echo it
           {
               if((*p_uart_custom >='a')&&(*p_uart_custom <='z'))//we only support character a~z
               {
+                   ret = *p_uart_custom;
                    put(*p_uart_custom);
                    uart_buffer[cmd_counter] = *p_uart_custom;//IN ORDER TO remember the command
                    cmd_counter ++;

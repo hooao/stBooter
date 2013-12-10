@@ -18,18 +18,17 @@ int main()
     put('\n');
     while((timeout--) && ((ch = fish_echo()) != 0x0d))
     {
-        printf("type Enter in %d second to active bare environment\r", timeout);
+        printf("\rtype Enter in %d seconds to active bare environment", timeout);
         srvSleep(1);
 	}
-	put('\n');
 	switch(ch)
 	{
 	    case 0x0d:
-	    put('\n');
 			while(1)
 			    fish_echo();
         default:break;
 	}
+	printf("\r\n\r\n");
 	srvLoadApp();
     return 0;
 }

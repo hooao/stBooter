@@ -7,8 +7,7 @@
 
 //#define DEBUG 
 //#define RELEASE
-#define DEBUG_LED_GPIO  GPIOD
-#define DEBUG_LED_PIN    gpio_pin_13
+
 
 #define IPMC_DEVSCRIPTION "Booter> "
 
@@ -22,7 +21,40 @@
 
 //#define QIUOS_DEBUG
 
-#define SYS_TERMINAL_UART UART4
+#define SYS_TERMINAL_UART UART4_IRQHandler()
+
+///////////////////////module layout////////////////////////
+/*
+# fish
+## history
+## board
+## version
+## help
+## olupd
+## boot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+
+
 
 #endif
 /*EOF*/

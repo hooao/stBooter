@@ -3,15 +3,14 @@
 // 1, config hardware
 // 2, loader user application
 #include "stm32f2xx.h"
+#include "stm32f2xx_rcc.h"
+#include "stm32f2xx_tim.h"
 
 #include "config.h"
 #include "system.h"
-#include "comp_gpio.h"
 #include "string.h"
+#include "comp_gpio.h"
 
-#include "stm32f2xx_rcc.h"
-
-#include "stm32f2xx_tim.h"
 
 extern void SystemInit(void);
 extern void usartBufferInit(void);
@@ -68,7 +67,7 @@ int cfgPeriphUart()
     UART4->CR3 = 0x0000;
     UART4->CR2 = 0x0000;
     UART4->CR1 = 0x200C;
-    //UART4->CR1 |= (1 << 5);//enable rx interrupt
+    UART4->CR1 |= (1 << 5);//enable rx interrupt
 
     return 0;
 }

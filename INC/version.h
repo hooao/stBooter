@@ -2,7 +2,7 @@
 #ifndef _VERSION_H_
 #define _VERSION_H_
 
-#define VERSTR   "stBooter version 0.1.0  20131209  (GreenXY)"
+#define VERSTR   "stBooter version 0.1.2  20131210  (GreenXY)"
 
 //unsigned char  BUILDDATE[]=__DATE__ "," __TIME__;
 //unsigned char code TimeStr[]=__TIME__;

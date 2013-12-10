@@ -41,12 +41,12 @@ int updBootloader()
 //             file
 int updFirmware()
 {
-			pFunction Jump_To_Application;
+#ifdef DEBUG_OLUPD
+	pFunction Jump_To_Application;
     uint32_t JumpAddress;
-
+#endif
     int timeout;
     int ret;
-    // receive firm ware
 
     ret = YmodemReceive();
 
@@ -64,7 +64,8 @@ int updFirmware()
     //lock 
     FLASH_If_lock();
     printf("WARNNING: Amf system NEED A REBOOT\r\n");
-#if 1
+    
+#ifdef DEBUG_OLUPD
 	//jump to new application
 	//application running
 		   JumpAddress = *(__IO uint32_t *)(APPLICATION_ADDRESS + 4);
