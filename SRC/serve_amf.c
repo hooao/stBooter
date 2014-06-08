@@ -48,6 +48,10 @@ void srvAmfDC12vOn(void)
         ;
 
 }
+void srvAmfDC12vOff(void)
+{
+    GPIOG->BSRRH |= 1UL <<  11;//12v DC
+}
 
 int srvBoardInit()
 {

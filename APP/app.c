@@ -4,6 +4,7 @@
 #include "Ymodem.h"
 #include "flash_if.h"
 
+extern void srvAmfPayloadOff(void);
 
 int main()
 {
@@ -29,7 +30,9 @@ int main()
         default:break;
 	}
 	printf("\r\n\r\n");
-	srvLoadApp();
+
+
+	boot_main();
     return 0;
 }
 

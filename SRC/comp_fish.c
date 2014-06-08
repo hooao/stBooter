@@ -55,6 +55,8 @@ FUNC olupd_main(void *arg)
 //found history command
 FUNC boot_main()
 {
+    srvAmfDC12vOff();
+    srvSleep(1);
     srvLoadApp();
     return 0;
 }
@@ -238,6 +240,7 @@ char fish_echo()
           {
               if((*p_uart_custom >='a')&&(*p_uart_custom <='z'))//we only support character a~z
               {
+                   
                    ret = *p_uart_custom;
                    put(*p_uart_custom);
                    uart_buffer[cmd_counter] = *p_uart_custom;//IN ORDER TO remember the command
@@ -254,4 +257,5 @@ char fish_echo()
     }
     return ret;
 }
+
 
