@@ -61,17 +61,17 @@ int srvBoardInit()
     
 #ifndef BARE_ENVIRONMENT
     srvAmfPayloadOff();
-    while(!AMF_SYS_48V_ALARM)
-    {
+  //  while(!AMF_SYS_48V_ALARM)
+  //  {
     //调用48v模块的i2c接口，将错误信息记录到sys_data结构体中
     // sys_data.pim48vdc_alarm = module_48vdc_alarm();
-    }
+  //  }
     
     srvAmfDC12vIpmcUpCtrOn();
     srvAmfDC12vOn();
 	
-   	while(!AMF_SYS_POWEROK)
-        ;
+   	//while(!AMF_SYS_POWEROK)
+    //    ;
 #endif
 }
 
