@@ -14,10 +14,10 @@ void srvAmfEarlyInit()
 }
 
 
+
 void srvAmfDC12vIpmcUpCtrOn(void)
 {
     int i;
-    //GPIOG->BSRRH = 1UL <<  11;//12v DC
     GPIOE->ODR |= 1UL <<  3;
     i=0xffffff;
     while(--i);
@@ -55,6 +55,7 @@ void srvAmfDC12vOff(void)
 
 int srvBoardInit()
 {
+    
     srvAmfEarlyInit();
     bootloader_stage1();
     fish_init();
@@ -66,10 +67,6 @@ int srvBoardInit()
     //调用48v模块的i2c接口，将错误信息记录到sys_data结构体中
     // sys_data.pim48vdc_alarm = module_48vdc_alarm();
   //  }
-    
-    srvAmfDC12vIpmcUpCtrOn();
-    srvAmfDC12vOn();
-	
    	//while(!AMF_SYS_POWEROK)
     //    ;
 #endif
@@ -80,6 +77,15 @@ int srvSleep(unsigned int sec)
     unsigned long long curTick;
     curTick = bootTick;
     while((bootTick - curTick) < (10 * sec))
+    ;
+    return 0;
+}
+
+int srvSleep10Ms(unsigned int tenmsec)
+{
+    unsigned long long curTick;
+    curTick = bootTick;
+    while((bootTick - curTick) < (1 * tenmsec))
     ;
     return 0;
 }

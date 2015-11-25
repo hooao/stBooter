@@ -55,7 +55,7 @@ FUNC olupd_main(void *arg)
 //found history command
 FUNC boot_main()
 {
-    srvAmfDC12vOff();
+    //srvAmfDC12vOff();
     srvSleep(1);
     srvLoadApp();
     return 0;
