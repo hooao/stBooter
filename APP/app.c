@@ -14,34 +14,34 @@ int main()
     srvBoardInit();
     printf("stBooter Loader\r\n");
     printf("Version :%s\r\n", VERSTR);
-    //printf("Press Enter to active console\r\n");
-    timeout = 1;
+    printf("Press Enter to active console\r\n");
+    timeout = 3;
     put('\n');
     
-    if((GPIOE->IDR | 0xFFDF) == 0xFFDF)//check out if pow button is pressed.
-    {
-        srvSleep10Ms(2);//delay 20 ms
-        if((GPIOE->IDR | 0xFFDF) == 0xFFDF)
-        {
-            srvAmfDC12vIpmcUpCtrOn();
-            srvAmfDC12vOn();
-            while(1)
-                fish_echo();
-        }
-	}
+ //    if((GPIOE->IDR | 0xFFFE) == 0xFFFE)//check out if pow button is pressed.
+ //    {
+ //        srvSleep10Ms(2);//delay 20 ms
+ //        if((GPIOE->IDR | 0xFFFE) == 0xFFFE)
+ //        {
+ //            srvAmfDC12vIpmcUpCtrOn();
+ //            srvAmfDC12vOn();
+ //            while(1)
+ //                fish_echo();
+ //        }
+	// }
 
-  //  while((timeout--) && ((ch = fish_echo()) != 0x0d))
-  //  {
-  //      printf("\rtype Enter in %d seconds to active bare environment", timeout);
-  //      srvSleep(1);
-//	}
-//	switch(ch)
-//	{
-//	    case 0x0d:
-//			while(1)
-//			    fish_echo();
-//        default:break;
-//	}
+   while((timeout--) && ((ch = fish_echo()) != 0x0d))
+   {
+       printf("\rtype Enter in %d seconds to active bare environment", timeout);
+       srvSleep(1);
+	}
+	switch(ch)
+	{
+	    case 0x0d:
+			while(1)
+			    fish_echo();
+       default:break;
+	}
 	printf("\r\n\r\n");
 
 

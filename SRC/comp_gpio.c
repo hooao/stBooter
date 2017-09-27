@@ -90,7 +90,7 @@ const struct gpio_attribute gpio_d[16]=
 
 
 const struct gpio_attribute gpio_e[16]=
-{{1,gpio_mode_OP, gpio_otyper_push_pull, gpio_ospeedr_50M, gpio_pupdr_pull_up, gpio_af0_system},/*pin_0*/
+{{ENABLE,gpio_mode_IN, gpio_otyper_push_pull, gpio_ospeedr_2M, gpio_pupdr_pull_up, gpio_af0_system},/*pin_0*/
 {1,gpio_mode_OP, gpio_otyper_push_pull, gpio_ospeedr_50M, gpio_pupdr_pull_up, gpio_af0_system},/*pin_1*/
 {0,0,0,0,0,0},/*pin_2*/
 {1,gpio_mode_OP, gpio_otyper_push_pull, gpio_ospeedr_50M, gpio_pupdr_pull_up, gpio_af0_system},/*pin_3*/
